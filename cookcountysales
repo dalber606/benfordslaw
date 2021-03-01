@@ -1,0 +1,102 @@
+library(ggthemes)
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(RColorBrewer)
+
+
+data <- read.csv("Archive_-_Cook_County_Assessor_s_Residential_Sales_Data.csv")
+
+
+data1 <- data %>%
+  select(PIN, Sale.Year, Sale.Price)
+
+data2 <- data1 %>%
+  mutate(Sale.Price = as.character(Sale.Price))
+
+data3 <- data2 %>%
+  mutate(First.Digit = substr(Sale.Price, 1,1))
+
+data4 <- data3 %>%
+  filter(First.Digit != "0")
+
+
+table(data3)
+
+ggplot(data4) +
+  geom_histogram(mapping = aes(x = First.Digit),
+                 stat = "count",
+                 fill = "orange") +
+  labs(title = "Does Property Sales Fit Benfords Law?",
+       subtitle = "Cook County Sales 2013-2019, Frequency of first digit") +
+  theme_economist()
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+cook_county_sales <- ggplot(data4) +
+  geom_histogram(mapping = aes(x = First.Digit),
+                 stat = "count",
+                 fill = "orange") +
+  labs(title = "Does Property Sales Fit Benfords Law?",
+       subtitle = "Cook County Sales 2013-2019, Frequency of first digit") +
+  theme_economist()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+#unused theme  
+theme(
+    plot.background = element_rect("lightgrey"), #grey background an grid
+    panel.background = element_rect("lightgrey"),
+    panel.grid = element_line("black"), #black grid lines
+    axis.title = element_text (size = 12, color = "white"), #58-61 control color and size of font
+    axis.text = element_text(size = 10, face = "bold", color = "white" ),
+    plot.title = element_text(size = 14, color = "white"),
+    plot.subtitle = element_text(face = "italic", size = 10, color = "white"))
+
+
+
+
+
+
+
+ggsave(filename = "BL_Cook_Sales.jpg",
+       plot = cook_county_sales)
+
+
