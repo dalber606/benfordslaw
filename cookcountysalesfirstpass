@@ -1,0 +1,190 @@
+library(ggthemes)
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(RColorBrewer)
+
+
+
+fpdata <- read.csv("Archive_-_Cook_County_Assessor_s_First_Pass_Values.csv")
+
+
+fpdata1 <- fpdata %>%
+  select(PIN, Most.Recent.Sale.Price, First.Pass.Value.1)
+
+fpdata2 <- fpdata %>%
+  select(PIN, Most.Recent.Sale.Price, First.Pass.Value.2)
+
+fpdata3 <- fpdata %>%
+  select(PIN, Most.Recent.Sale.Price, First.Pass.Value.3)
+
+fpdata4 <- fpdata %>%
+  select(PIN, Most.Recent.Sale.Price, First.Pass.Value.4)
+
+fpdata5 <- fpdata %>%
+  select(PIN, Most.Recent.Sale.Price, First.Pass.Value.5)
+
+fpdata6 <- fpdata %>%
+  select(PIN, Most.Recent.Sale.Price, First.Pass.Value.6)
+
+
+
+
+
+
+
+
+
+
+fp1data <- fpdata1 %>%
+  mutate(First.Digit = substr(First.Pass.Value.1, 1,1))
+
+
+fp2data <- fpdata2 %>%
+  mutate(First.Digit = substr(First.Pass.Value.2, 1,1))
+
+
+fp3data <- fpdata3 %>%
+  mutate(First.Digit = substr(First.Pass.Value.3, 1,1))
+
+fp4data <- fpdata4 %>%
+  mutate(First.Digit = substr(First.Pass.Value.4, 1,1))
+
+fp6data <- fpdata6 %>%
+  mutate(First.Digit = substr(First.Pass.Value.6, 1,1))
+
+
+
+data4 <- data3 %>%
+  filter(First.Digit != "0")
+
+
+table(data3)
+
+fpgraphstep1 <- ggplot(fp1data) +
+  geom_histogram(mapping = aes(x = First.Digit),
+                 stat = "count",
+                 fill = "orange") +
+  labs(title = "Does Assessed Property Values Fit Benfords Law?",
+       subtitle = "Cook County First Pass Step 1 2019, Frequency of first digit") +
+  theme_economist()
+
+
+fpgraphstep2 <- ggplot(fp2data) +
+  geom_histogram(mapping = aes(x = First.Digit),
+                 stat = "count",
+                 fill = "orange") +
+  labs(title = "Does Assessed Property Values Fit Benfords Law?",
+       subtitle = "Cook County First Pass Step 2 2019, Frequency of first digit") +
+  theme_economist()
+
+
+
+fpgraphstep3 <- ggplot(fp3data) +
+  geom_histogram(mapping = aes(x = First.Digit),
+                 stat = "count",
+                 fill = "orange") +
+  labs(title = "Does Assessed Property Values Fit Benfords Law?",
+       subtitle = "Cook County First Pass Step 3 2019, Frequency of first digit") +
+  theme_economist()
+
+
+fpgraphstep4 <- ggplot(fp4data) +
+  geom_histogram(mapping = aes(x = First.Digit),
+                 stat = "count",
+                 fill = "orange") +
+  labs(title = "Does Assessed Property Values Fit Benfords Law?",
+       subtitle = "Cook County First Pass Step 4 2019, Frequency of first digit") +
+  theme_economist()
+
+
+fpgraphstep5 <- ggplot(fp4data5) +
+  geom_histogram(mapping = aes(x = First.Digit),
+                 stat = "count",
+                 fill = "orange") +
+  labs(title = "Does Assessed Property Values Fit Benfords Law?",
+       subtitle = "Cook County First Pass Step 4 2019, Frequency of first digit") +
+  theme_economist()
+
+
+
+fpgraphstep6<- ggplot(fp6data) +
+  geom_histogram(mapping = aes(x = First.Digit),
+                 stat = "count",
+                 fill = "orange") +
+  labs(title = "Does Assessed Property Values Fit Benfords Law?",
+       subtitle = "Cook County First Pass Step 6 2019, Frequency of first digit") +
+  theme_economist()
+
+
+
+
+
+
+ggsave(filename = "fpgraphstep1.jpg",
+       plot = fpgraphstep1 )
+
+ggsave(filename = "fpgraphstep2.jpg",
+       plot = fpgraphstep2 )
+
+ggsave(filename = "fpgraphstep3.jpg",
+       plot = fpgraphstep3 )
+
+ggsave(filename = "fpgraphstep4.jpg",
+       plot = fpgraphstep4)
+
+ggsave(filename = "fpgraphstep5.jpg",
+       plot = fpgraphstep5 )
+
+ggsave(filename = "fpgraphstep6.jpg",
+       plot = fpgraphstep6 )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#unused theme  
+theme(
+  plot.background = element_rect("lightgrey"), #grey background an grid
+  panel.background = element_rect("lightgrey"),
+  panel.grid = element_line("black"), #black grid lines
+  axis.title = element_text (size = 12, color = "white"), #58-61 control color and size of font
+  axis.text = element_text(size = 10, face = "bold", color = "white" ),
+  plot.title = element_text(size = 14, color = "white"),
+  plot.subtitle = element_text(face = "italic", size = 10, color = "white"))
+
+
+ggplot(data4) +
+  geom_histogram(mapping = aes(x = First.Digit),
+                 stat = "count",
+                 fill = "orange") +
+  labs(title = "Does Property Sales Fit Benfords Law?",
+       subtitle = "Cook County Sales 2013-2019, Frequency of first digit") +
+  theme_economist()
+
+
+
+
+
+
+
+
+
+
+
+ggsave(filename = "BL_Cook_Sales_FirstPass",
+       plot = data4)
